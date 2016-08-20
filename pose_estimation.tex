@@ -69,18 +69,6 @@ Template Based Methods  [Reiter et. al, CARS 2012]
 
 \end{frame}
 
-\begin{frame}{Comparison of Regression Methods}
-$y = x+0.005x^2+ \epsilon$, $x \in [1,10] \cup [21,25]$,  $\epsilon \sim \mathcal{N}(0,10)$ 
-\begin{figure}
-\centering
-\subfloat[Linear Regression]{\includegraphics[width=0.23\linewidth,trim=30mm 80mm 40mm 70mm,clip]{figures/linear_fit}}
-\subfloat[Quadratic Regression]{\includegraphics[width=0.23\linewidth,trim=30mm 80mm 40mm 70mm,clip]{figures/quadratic_fit}}
-\vspace{-20pt}
-\subfloat[Bayesian Linear Regression]{\includegraphics[width=0.23\linewidth,trim=30mm 80mm 40mm 70mm,clip]{figures/bayesian_linear_fit}}
-\subfloat[GPR]{\includegraphics[width=0.23\linewidth,trim=30mm 80mm 40mm 70mm,clip]{figures/gpml_fit}}
-%\caption{ (a) Linear Regression yields the model $y=mx+c$ with $m = 0.9644$ and $c = 1.5891$ (b) Quadratic model yields the model $y = ax^2+bx+c$ with $a = 0.0534$, $b = -0.04781$ and $c = 7.1231$ (c) Bayesian Regression fit uses a zero mean Gaussian observation noise with  variance $10$ and a zero mean Gaussian with diagonal variance $5$ prior on slope and intercept. The estimation process results in a mean parameter estimate of $0.9867$ slope and $1.1797$ intercept. (d) GPR with constant mean function, Gaussian likelihood and Squared Exponential covariance function} \label{fig:regression_comparison}
-\end{figure}
-\end{frame}
 
 \begin{frame}{Gaussian Process Regression}
 \begin{block}{Problem with Regression Models}
