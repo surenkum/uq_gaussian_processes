@@ -1,0 +1,67 @@
+\documentclass[10pt, compress]{beamer}
+\usetheme{m}
+\usepackage{multimedia}
+ 
+ \usepackage{booktabs} % for better tables
+ \usepackage{natbib}  % for better citations
+ \usepackage{media9} % for includemedia i.e. videos
+ \usepackage{xcolor} % for more colors
+ 
+\usepackage{tikz}
+\usetikzlibrary{shadows,trees}
+\usetikzlibrary{shapes,calc,backgrounds}
+\usetikzlibrary{fadings}
+\usetikzlibrary{arrows}
+\usetikzlibrary{fit,positioning}
+\usepackage{environ}
+\makeatletter
+\newsavebox{\measure@tikzpicture}
+\NewEnviron{scaletikzpicturetowidth}[1]{%
+  \def\tikz@width{#1}%
+  \def\tikzscale{1}\begin{lrbox}{\measure@tikzpicture}%
+  \BODY
+  \end{lrbox}%
+  \pgfmathparse{#1/\wd\measure@tikzpicture}%
+  \edef\tikzscale{\pgfmathresult}%
+  \BODY
+}
+\makeatother
+%\usepgfplotslibrary{dateplot,calc}
+
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{caption}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage[position=bottom,labelfont=bf,textfont={sl,bf}]{subfig}
+\usepackage[utf8]{inputenc}
+\usepackage{relsize}
+
+\usepackage{epsfig}
+\usepackage[]{algorithm2e}
+%
+\title{Motion and Observation Models for Behavior Understanding}
+\author{Suren Kumar \\ Research Fellow \\ Electrical Engineering and Computer
+Science}
+\institute{University of Michigan, Ann Arbor}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+% Introduction
+%\include{intro}
+% Tracking
+%\include{tracking}
+% Pose Estimation
+\include{pose_estimation}
+%Dynamic Map
+%\include{dynamic_map}
+% Toyota Project
+%\include{toyota_project}
+
+\begin{frame}[standout]
+Questions?
+\end{frame}
+\end{document}
