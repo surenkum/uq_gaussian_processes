@@ -1,5 +1,5 @@
 PROJECT=uq_talk
-TEX=pdflatex
+TEX=lualatex
 BIBTEX=bibtex
 BUILDTEX=$(TEX) $(PROJECT).tex
 
@@ -11,8 +11,6 @@ DIFF_OLD=HEAD
 full: all
 
 all:
-	$(BUILDTEX)
-	$(BIBTEX) $(PROJECT)
 	$(BUILDTEX)
 	$(BUILDTEX)
 
