@@ -1,0 +1,85 @@
+\section{Introduction}
+\begin{frame}{Introduction}
+\tikzstyle{block} = [draw, fill=blue!20, rectangle, 
+    minimum height=3em, minimum width=6em]
+\tikzstyle{sum} = [draw, fill=blue!20, circle, node distance=1cm]
+\tikzstyle{input} = [coordinate]
+\tikzstyle{output} = [coordinate]
+\tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
+
+% The block diagram code is probably more verbose than necessary
+\begin{center}
+\begin{tikzpicture}[auto, node distance=2cm,>=latex']
+    % We start by placing the blocks
+    \node [input, name=input] {};
+    \node [block, right of=input, pin={[pinstyle]above:Disturbances},
+            node distance=2cm] (system) {System};
+    \node [output, right of=system] (output) {};
+
+    % Once the nodes are placed, connecting them is easy. 
+    \draw [draw,->] (input) -- node {$x$} (system);
+    \draw [->] (system) -- node [name=y] {$y^e(x)$} (output) ;
+\end{tikzpicture}
+\end{center}
+\pause
+
+\begin{center}
+% The block diagram code is probably more verbose than necessary
+\begin{tikzpicture}[auto, node distance=2cm,>=latex']
+    % We start by placing the blocks
+    \node [input, name=input] {};
+    \node [block, right of=input, pin={[pinstyle]above:Disturbances},
+            node distance=2cm] (system) {System};
+     \node [block, below of=system] (model) {Model};
+    \node [sum, right of=output] (sum) {};
+    \node [output, right of=sum] (final_output) {};
+
+    % Once the nodes are placed, connecting them is easy. 
+    \draw [draw,->] (input) -- node [name=x] {$x$} (system);
+    \draw [->] (system) -- node [name=y] {$y^e(x)$} (sum) ;
+    \draw [->] (x) |- (model);
+    \draw [->] (model) -| node [near end] {$y^m(x)$} (sum);
+    \draw [->] (sum) -- node [name=y_final] {$\delta(x)$} (final_output) ;
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}{Motivation}{Inverse Uncertainty Quantification}
+	\begin{block}{Bias Correction}
+		\begin{align}
+			y^e(x) = y^m(x)+\delta(x)+\epsilon \nonumber
+		\end{align}
+		where $\epsilon$ is the experimental uncertainty.
+	\end{block}
+	% Model Inadequacy
+	\pause
+	\begin{block}{Parameter Calibration}
+		\begin{align}
+			y^e(x) = y^m(x,\theta^*)+\epsilon \nonumber
+		\end{align}
+	\end{block}
+	\pause
+	\begin{block}{Bias Correction and Parameter Calibration}
+		\begin{align}
+			y^e(x) = y^m(x,\theta^*)+\delta(x)+\epsilon \nonumber
+		\end{align}
+	\end{block}
+
+\end{frame}
+
+\begin{frame}{Need for Function Approximation}
+	\begin{itemize}
+		\item Lack of simulation results $y^m(x,\theta)$
+		\item Parameterizing discrepancy function $\delta(x)$
+	\end{itemize}
+
+	\begin{block}{Why Bayesian}
+		\begin{itemize}
+			\item Integration of prior knowledge
+
+		\end{itemize}
+	\end{block}
+	\vskip0pt plus 1filll
+Bayesian calibration of computer models, Marc C. Kennedy, Anthony O'Hagan in Journal of the Royal Statistical Society, 2001 
+
+\end{frame}
