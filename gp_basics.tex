@@ -46,24 +46,77 @@ $y = x+0.005x^2+ \epsilon$, $x \in [1,10] \cup [21,25]$,  $\epsilon \sim \mathca
 \end{frame}
 
 \begin{frame}{Gaussian Process}
-    \begin{block}
+    \begin{block}{Definition}
         Gaussian Process is a collection of random variables, any finite number
-        of which are joint Gaussian distribution.
+        of which are joint Gaussian distribution. \\
+$f(x) \sim \mathbb{GP}(m(x),k(x,x^1))$
     \end{block}
+    \begin{itemize}
+        \item Generalization from mean vector and covariance matrix
+        \item Indexed by $x$
+        \item At every value of $x$, we have an associated random variable
+        \end{itemize}
+
     Non-parametric does not mean no parameters. Parametric models can through
     away data once parameters are tuned.
 \end{frame}
 
-\begin{frame}{Introduction}
+\begin{frame}{Visualizing Gaussian Process}
+$f(x) \sim \mathbb{GP}(m(x),k(x,x^1))$ \\
+$m(x) = \frac{1}{4}x^2,$ and $k(x,x^1) = \exp{(-\frac{1}{2}(x-x^1)^2)}$\\
+Let's sample at $n$ different locations\\
+$\mu(x_i) = \frac{1}{4}x_i^2,$ and $\Sigma_{ij}(x_i,x_j) =
+\exp{(-\frac{1}{2}(x_i-x_j)^2)}$, $i,j \in [1,...,n]$
+\begin{figure}
+\centering
+\includegraphics[width=0.5\linewidth]{figures/converted_sampling_gp}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Posterior Gaussian Process}
+$f(x): x \mapsto y$. 
+\begin{itemize}
+    \item Input: Ground truth data  from $(\mathbf{x},\mathbf{f(x)})$ from $n$ observations
+\item Output: Output $f_*$ for a novel input $x_*$, $p(y_*|x_*)$. 
+\item Measurement Process: $y = f(x)+\epsilon $, $\epsilon \sim \mathcal{N}(0,\sigma^2)$
+\end{itemize}
+Joint Distribution:
+\begin{align}
+    \begin{bmatrix}
+        f \\
+        f_*
+    \end{bmatrix}& \sim
+    \mathcal{N}\left(
+    \begin{bmatrix}
+        \mu\\
+        \mu_*
+    \end{bmatrix}, 
+    \begin{bmatrix}
+        \Sigma & \Sigma_* \\
+        \Sigma_*^T & \Sigma_{**}
+    \end{bmatrix}
+    \right)
+\end{align}
+Marginalization:
+\begin{align}
+    f_*|f \sim
+    \mathcal{N}(u_*+\Sigma_*^T\Sigma^{-1}(f-\mu),\Sigma_{**}-\Sigma_*^T\Sigma^{-1}\Sigma_*)
+\end{align}
 
 \end{frame}
 
-\begin{frame}{Introduction}
+\begin{frame}{Posterior Gaussian Process}
+ Posterior Process:
+\begin{align}
+    \mathbf{f}|\mathcal{D} \sim & \mathbb{GP}(m_D,k_D) \nonumber\\
+    & m_D(x) = m(x) + \Sigma(X,x)^T\Sigma^{-1}(f-m) \nonumber\\
+    & k_D(x,x^1) = k(x,x^1) - \Sigma(X,x)^T\Sigma^{-1}\Sigma(X,x^1)
+\end{align}
 
-\end{frame}
-
-\begin{frame}{Introduction}
-
+Observation Noise:
+\begin{align}
+    y & \sim \mathbb{GP} (m,k+\sigma_n^2\delta_{ii^1})
+\end{align}
 \end{frame}
 
 \begin{frame}{Introduction}
