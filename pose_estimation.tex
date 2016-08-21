@@ -69,8 +69,102 @@ Template Based Methods  [Reiter et. al, CARS 2012]
 
 \end{frame}
 
+\section{Object Tracking}
+\subsection[]{Product of Tracking Experts (PoTE Model)}
+
+\begin{frame}{Parts of the Tracker}
+\begin{itemize}
+\item Motion Model: Second Order Motion Continuity
+\item Observation Model: Multiple observers 
+\item Interaction Model: Constant Velocity assumption
+\item Estimation: Depends on the observation model
+\end{itemize}
+\end{frame}
 
 
+\begin{frame}{Product of Tracking Experts}
+\begin{figure}
+	%\includegraphics[scale=0.4,trim=5mm 105mm 30mm 40mm,clip]{figures/trackerfusion.pdf}
+	\includegraphics[scale=0.4,trim=5mm 105mm 30mm 40mm,clip]{figures/converted/trackerfusion}
+	\label{fig:systemflow}
+\end{figure}
+Mixture Models:
+\begin{align*}
+P(x) &= \sum_{j=1}^M \pi_{i}p_{j}(x|\theta_j),\hspace{5pt}  \sum_{j=1}^M \pi_{i} = 1
+\end{align*}
+Product of Experts Model
+\begin{align*}
+P(x) &= \frac{1}{Z} \prod\limits_{j=1}^M f_{j}(x|\theta_j),\hspace{5pt} Z = \mathlarger{\int}  \prod\limits_{j=1}^M f_{j}(x|\theta_j) \mathrm{d}x
+\end{align*}
+\end{frame}
+
+\begin{frame}{Product of Experts Model}
+\begin{itemize}
+\item Expert 1: $\mu = [245,270]^T$, $\Sigma = diag([16.66,25])$
+\item Expert 2: $\mu = [255,275]^T$, $\Sigma = diag([16.66,25])$
+\end{itemize}
+\begin{figure}[h]
+\centering
+  \subfloat{\includegraphics[width=0.35\linewidth, trim = 20mm 80mm 40mm 85mm,clip]{figures/two_experts.pdf}}
+  \subfloat{\includegraphics[width=0.35\linewidth, trim = 20mm 80mm 40mm 85mm,clip]{figures/two_experts_contour.pdf}}
+\end{figure} 
+Resulting Output: $\mu = [250,272.5]^T$, $\Sigma = [8.33,12.5]$
+
+\begin{itemize}
+\item Merges output of various trackers
+\item Can faithfully use information from detectors
+\item Allows to use complete densities for inference in tracking
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Uncertainty Representation}
+\begin{align*}
+\begin{split}
+ \mu &= [x_{CB},y_{CB}]^T, 
+\Sigma = \frac{1}{6} \begin{bmatrix}
+ w_{B} & 0\\ 
+0 & h_{B}
+\end{bmatrix}
+\end{split}
+\end{align*}
+
+PoTE Model with K Gaussian Experts ( $\underline{\mu_k},\Sigma_k$ )
+
+\begin{align*}
+p(\underline{x}|\theta_{T_1},\theta_{T_2},...,\theta_{T_K}) = \frac{\prod\limits_{k=1}^{K}\frac{1}{2\pi|\Sigma_k|^{\frac{1}{2}}}\exp(-\frac{1}{2}[\underline{x}-\underline{\mu_k}]^T\Sigma_k^{-1}[\underline{x}-\underline{\mu_k}])}{\int{  \prod\limits_{k=1}^{K} p_k(\underline{x}|\theta_{k})\mathrm{d}\underline{x}}}\\
+%& = \frac{\exp(\sum\limits_{k=1}^{K}-\frac{1}{2}[\underline{x}-\underline{\mu_k}]^T\mathbf{\Sigma_k}^{-1}[\underline{x}-\underline{\mu_k}])}{Z}
+\end{align*}
+\begin{align*}
+&p(\underline{x}|\theta_{T_1},\theta_{T_2},...,\theta_{T_K}) \sim \mathcal{N}(\underline{\mu},\Sigma), \text{ where }\\
+&\Sigma^{-1} = \sum_{k=1}^{K}\Sigma_k^{-1},
+\underline{\mu} = \Sigma\left(\sum_{k=1}^{K} \Sigma_k^{-1}\underline{\mu_k}\right)
+\end{align*}
+\end{frame}
+
+\begin{frame}{Commonly used Tracking Experts}
+\begin{description}[leftmargin=*]
+\item [Kanade Lucas Tracking] Point Feature Tracking for bounding box prediction
+\item [Background Subtraction] Helpful for stationary camera
+\item [Motion Prediction] Second order motion continuity
+\item [Object Detector] High Confidence detection from a detector
+\item [Dense Optical Flow] Texture-less objects
+\end{description}
+\end{frame}
+
+\begin{frame}{Surgical Tracking Results}
+	\begin{center}
+\movie[autostart,loop,showcontrols]{\includegraphics[width=0.8\linewidth]{videos/clamp_tracking}}{videos/clamp_tracking.avi}
+\end{center}
+\end{frame}
+
+\begin{frame}{Person Tracking Results}
+	\begin{center}
+\movie[autostart,loop,showcontrols]{\includegraphics[width=0.8\linewidth]{videos/ubchockey}}{videos/ubchockey.avi}
+\end{center}
+\end{frame}
+
+\section{Gaussian Process based Pose Estimation}
 \begin{frame}{Gaussian Process Regression}
 \begin{block}{Problem with Regression Models}
 \begin{itemize}
@@ -257,6 +351,13 @@ HOG& 2.42  & 2.49\\ \hline
 Estimation", Robotics: Science and Systems VIII, 2013
 \end{enumerate}
 \end{block}
+\end{frame}
+
+\begin{frame}{References}
+    \begin{itemize}
+        \item Gaussian Processes for Regression: A Quick Introduction, M. Ebden
+        \item Gaussian Processes for Machine Learning, Carl Edward Rasmussen and Chris Williams, the MIT Press, 2006 
+        \end{itemize}
 \end{frame}
 
 
