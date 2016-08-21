@@ -57,8 +57,7 @@ $f(x) \sim \mathbb{GP}(m(x),k(x,x^1))$
         \item At every value of $x$, we have an associated random variable
         \end{itemize}
 
-    Non-parametric does not mean no parameters. Parametric models can through
-    away data once parameters are tuned.
+
 \end{frame}
 
 \begin{frame}{Visualizing Gaussian Process}
@@ -119,8 +118,23 @@ Observation Noise:
 \end{align}
 \end{frame}
 
-\begin{frame}{Introduction}
-
+\begin{frame}{Training Hyper-parameters}
+    Parameterizing GP Priors \\
+    $m(x) = ax^2+bx+c$, and $k(x,x^1) = \sigma_y^2\exp{(-\frac{(x-x^1)^2}{2l^2})}+\sigma^2_n\delta_{ii^1}$ \\
+    Hyperparameters: $\theta = \{a,b,c,\sigma_y,\sigma_n,l\}$ \\
+    Fitting:
+    \begin{align}
+        L &= \log{p(y|x,\theta)} \nonumber\\
+          &= -\frac{1}{2}\log|\Sigma| - \frac{1}{2} (y-\mu)^T\Sigma^{-1}(y-\mu) -
+        \frac{n}{2}\log{2\pi}
+    \end{align}
+    Estimation:
+    \begin{align}
+        \frac{\partial L}{\partial \theta_m}& = -(y-\mu)^T\Sigma^{-1}\frac{\partial m}{\partial \theta_m} \nonumber \\
+        \frac{\partial L}{\partial \theta_k}& = \frac{1}{2} trace(\Sigma^{-1}\frac{\partial \Sigma}{\partial \theta_k})+\frac{1}{2}(y-\mu)^T\frac{\partial \Sigma}{\partial \theta_k}\Sigma^{-1}\frac{\partial \Sigma}{\partial \theta_k}(y-\mu)
+    \end{align}
+Non-parametric does not mean no parameters. Parametric models can through
+    away data once parameters are tuned.
 \end{frame}
 
 \begin{frame}{Gaussian Process Regression}

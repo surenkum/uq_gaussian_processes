@@ -70,6 +70,7 @@ Template Based Methods  [Reiter et. al, CARS 2012]
 \end{frame}
 
 
+
 \begin{frame}{Gaussian Process Regression}
 \begin{block}{Problem with Regression Models}
 \begin{itemize}
@@ -88,28 +89,28 @@ $f(x) \sim \mathbb{GP}(m(x),k(x,x^1))$
 \end{block}
 \end{frame}
 
-\begin{frame}{Gaussian Process Regression}
-$f(x): x \mapsto y$. 
-\begin{itemize}
-\item Input: Ground truth data  from $(\mathbf{X},\mathbf{y})$ from $n$ observations
-\item Output: Pose $y*$ for a new image with associated feature vector $x^*$, $p(y^*|x^*)$. 
-\item Measurement Process: $y = f(x)+\epsilon $, $\epsilon \sim \mathcal{N}(0,\sigma^2)$
-\end{itemize}
-Inference:
-\begin{itemize}
-\item $f(x) \sim \mathbb{GP}(m(x),k(x,x^1))$
-\item $\mathrm{cov}(f(x_p),f(x_q)) = k(x_p,x_q) = \exp^{-\frac{1}{2l}(x_p-x_q)^2}$
-\item For two observation, $y_p,y_q$, we get, $\mathrm{cov}(y_p,y_q)=k(x_p,x_q)+\sigma^{2}\delta_{pq} $
-\end{itemize}
-Prediction: Marginalize training data,
-\begin{align}
-\mathbf{f}^*|\mathbf{X},\mathbf{y},X^*&\sim \mathcal{N}(\mathbf{\bar{f}}^*,\mathrm{cov}(\mathbf{f}^*)) \label{eq:final_prediction}\\
-\mathbf{\bar{f}}^* = &K(X^*,X)[K(X,X)+\sigma^2I]^{-1}\mathbf{y} \nonumber \\
-\mathrm{cov}(\mathbf{f}^*) = &K(X^*,X^*)- K(X^*,X)[K(X,X)+\sigma^2I]^{-1}K(X,X^*) \nonumber 
-\end{align}
-%Intuitively this algorithm gives high confidence estimates in the region of feature space with lot of ground truth data, and estimates with high variance in regions with sparse ground truth data. 
-\end{frame}
-
+%\begin{frame}{Gaussian Process Regression}
+%$f(x): x \mapsto y$. 
+%\begin{itemize}
+%\item Input: Ground truth data  from $(\mathbf{X},\mathbf{y})$ from $n$ observations
+%\item Output: Pose $y*$ for a new image with associated feature vector $x^*$, $p(y^*|x^*)$. 
+%\item Measurement Process: $y = f(x)+\epsilon $, $\epsilon \sim \mathcal{N}(0,\sigma^2)$
+%\end{itemize}
+%Inference:
+%\begin{itemize}
+%\item $f(x) \sim \mathbb{GP}(m(x),k(x,x^1))$
+%\item $\mathrm{cov}(f(x_p),f(x_q)) = k(x_p,x_q) = \exp^{-\frac{1}{2l}(x_p-x_q)^2}$
+%\item For two observation, $y_p,y_q$, we get, $\mathrm{cov}(y_p,y_q)=k(x_p,x_q)+\sigma^{2}\delta_{pq} $
+%\end{itemize}
+%Prediction: Marginalize training data,
+%\begin{align}
+%\mathbf{f}^*|\mathbf{X},\mathbf{y},X^*&\sim \mathcal{N}(\mathbf{\bar{f}}^*,\mathrm{cov}(\mathbf{f}^*)) \label{eq:final_prediction}\\
+%\mathbf{\bar{f}}^* = &K(X^*,X)[K(X,X)+\sigma^2I]^{-1}\mathbf{y} \nonumber \\
+%\mathrm{cov}(\mathbf{f}^*) = &K(X^*,X^*)- K(X^*,X)[K(X,X)+\sigma^2I]^{-1}K(X,X^*) \nonumber 
+%\end{align}
+%%Intuitively this algorithm gives high confidence estimates in the region of feature space with lot of ground truth data, and estimates with high variance in regions with sparse ground truth data. 
+%\end{frame}
+%
 \subsection[]{Smoothing Predictions}
 \begin{frame}{Improving Prediction}
 \begin{itemize}
